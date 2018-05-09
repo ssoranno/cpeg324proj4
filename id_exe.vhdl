@@ -37,15 +37,31 @@ component flipFlop_8bit is
 	q : out std_logic_vector(7 downto 0));
 end component;
 
+component flipFlop_4bit is	
+	port(
+	d : in std_logic_vector(3 downto 0);
+	clk : in std_logic;
+	enable : in std_logic;
+	q : out std_logic_vector(3 downto 0));
+end component;
+
+component flipFlop_bit is	
+	port(
+	d : in std_logic;
+	clk : in std_logic;
+	enable : in std_logic;
+	q : out std_logic);
+end component;
+
 begin
 
 RDest: flipFlop_2bit port map(d=>rd, clk=>clk, enable=>enable, q=>ord);
 IMME: flipFlop_4bit port map(d=>imm, clk=>clk, enable=>enable, q=>oimm);
-Out1: flipFlop_8bit port map(d=>rego1, clk=>clk, enable=>enable, q=>);
-Out2: flipFlop_8bit port map(d=>v0, clk=>clk, enable=>enable, q=>t0);
-C1: flipFlop_bit port map(d=>v0, clk=>clk, enable=>enable, q=>t0);
-C2: flipFlop_bit port map(d=>v0, clk=>clk, enable=>enable, q=>t0);
-C3: flipFlop_bit port map(d=>v0, clk=>clk, enable=>enable, q=>t0);
-C4: flipFlop_bit port map(d=>v0, clk=>clk, enable=>enable, q=>t0);
-C5: flipFlop_bit port map(d=>v0, clk=>clk, enable=>enable, q=>t0);
-C6: flipFlop_bit port map(d=>v0, clk=>clk, enable=>enable, q=>t0);
+Out1: flipFlop_8bit port map(d=>rego1, clk=>clk, enable=>enable, q=>o1);
+Out2: flipFlop_8bit port map(d=>rego2, clk=>clk, enable=>enable, q=>o2);
+C1: flipFlop_bit port map(d=>cs1, clk=>clk, enable=>enable, q=>ocs1);
+C2: flipFlop_bit port map(d=>cs2, clk=>clk, enable=>enable, q=>ocs2);
+C3: flipFlop_bit port map(d=>cs3, clk=>clk, enable=>enable, q=>ocs3);
+C4: flipFlop_bit port map(d=>cs4, clk=>clk, enable=>enable, q=>ocs4);
+C5: flipFlop_bit port map(d=>cs5, clk=>clk, enable=>enable, q=>ocs5);
+C6: flipFlop_bit port map(d=>cs6, clk=>clk, enable=>enable, q=>ocs6);
