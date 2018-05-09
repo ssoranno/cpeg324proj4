@@ -8,7 +8,7 @@ entity id_exe is
 	imm : in std_logic_vector(7 downto 0);
 	rego1 : in std_logic_vector(7 downto 0);
 	rego2 : in std_logic_vector(7 downto 0);
-	skipval : in std_logic_vector(3 downto 0);
+	skipIMM : in std_logic_vector(3 downto 0);
 	cs1: in std_logic;
 	cs2: in std_logic;
 	cs3: in std_logic;
@@ -21,7 +21,7 @@ entity id_exe is
 	oimm : out std_logic_vector(7 downto 0); -- output 2 for ALU
 	o1 : out std_logic_vector(7 downto 0); -- output 2 for ALU
 	o2 : out std_logic_vector(7 downto 0); -- output 2 for ALU
-	oskipval: out std_logic_vector(3 downto 0);
+	oskipIMM: out std_logic_vector(3 downto 0);
 	ocs1 : out std_logic; -- output 2 for ALU
 	ocs2 : out std_logic;
 	ocs3 : out std_logic;
@@ -70,7 +70,7 @@ RDest: flipFlop_2bit port map(d=>rd, clk=>clk, enable=>enable, q=>ord);
 IMME: flipFlop_8bit port map(d=>imm, clk=>clk, enable=>enable, q=>oimm);
 Out1: flipFlop_8bit port map(d=>rego1, clk=>clk, enable=>enable, q=>o1);
 Out2: flipFlop_8bit port map(d=>rego2, clk=>clk, enable=>enable, q=>o2);
-SV: flipFlop_4bit port map(d=>skipval, clk=>clk, enable=>enable, q=>oskipval);
+SV: flipFlop_4bit port map(d=>skipIMM, clk=>clk, enable=>enable, q=>oskipIMM);
 C1: flipFlop_bit port map(d=>cs1, clk=>clk, enable=>enable, q=>ocs1);
 C2: flipFlop_bit port map(d=>cs2, clk=>clk, enable=>enable, q=>ocs2);
 C3: flipFlop_bit port map(d=>cs3, clk=>clk, enable=>enable, q=>ocs3);

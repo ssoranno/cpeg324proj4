@@ -92,6 +92,61 @@ component shift_reg is
 	);
 end component;
 
+component id_exe is
+	port (
+	rd : in std_logic_vector(1 downto 0); -- register destination binary value
+	imm : in std_logic_vector(7 downto 0);
+	rego1 : in std_logic_vector(7 downto 0);
+	rego2 : in std_logic_vector(7 downto 0);
+	skipIMM : in std_logic_vector(3 downto 0);
+	cs1: in std_logic;
+	cs2: in std_logic;
+	cs3: in std_logic;
+	cs4: in std_logic;
+	cs5: in std_logic;
+	cs6: in std_logic;
+	clk : in std_logic; -- clock input
+	enable : in std_logic; -- enable input
+	ord : out std_logic_vector(1 downto 0); -- output 1 for ALU
+	oimm : out std_logic_vector(7 downto 0); -- output 2 for ALU
+	o1 : out std_logic_vector(7 downto 0); -- output 2 for ALU
+	o2 : out std_logic_vector(7 downto 0); -- output 2 for ALU
+	oskipIMM: out std_logic_vector(3 downto 0);
+	ocs1 : out std_logic; -- output 2 for ALU
+	ocs2 : out std_logic;
+	ocs3 : out std_logic;
+	ocs4 : out std_logic;
+	ocs5 : out std_logic;
+	ocs6 : out std_logic);
+end component;
+
+component exe_wb is 
+	port (
+	inTemp: in std_logic;
+	ALUO: in std_logic_vector(7 downto 0);
+	imm : in std_logic_vector(7 downto 0);
+	cs1: in std_logic;
+	cs2: in std_logic;
+	cs3: in std_logic;
+	cs4: in std_logic;
+	cs5: in std_logic;
+	cs6: in std_logic;
+	clk : in std_logic; -- clock input
+	enable : in std_logic; -- enable input
+	rd : in std_logic_vector(1 downto 0); -- register destination binary value
+	oinTemp: out std_logic;
+	oALUO: out std_logic_vector(7 downto 0);
+	oimm : out std_logic_vector(7 downto 0); -- output 2 for ALU
+	ocs1: out std_logic;
+	ocs2: out std_logic;
+	ocs3: out std_logic;
+	ocs4 : out std_logic;
+	ocs5 : out std_logic;
+	ocs6 : out std_logic;
+	ord : out std_logic_vector(1 downto 0) -- output 1 for ALU
+	);
+end component;
+
 -- Declare signals
 signal R1, R2, RD  : std_logic_vector(1 downto 0);
 signal IMM, skipVal, inSkip, postskip, newIMM : std_logic_vector(3 downto 0);
@@ -110,6 +165,9 @@ ID: inDecode port map(I=> I, ConSig => DISPBEQ, r1=>R1, r2=>R2, rd=> RD, imm => 
 SE: sign_extend port map(i=>IMM, o=>ext);
 -- Declare the output for the register file 
 reg: regFile port map(r1=> R1, r2=> R2, rd=>RD, wb=>WB, clk=>REnable, enable=>REGWRITE, o1=>O1, o2=>O2);
+
+IE: id_exe port map(rd=>RD, imm=>ext, rego1=>O1, rego2=>O2, skipIMM=>newIMM, cs1=>ALUSKIP, cs2=>PT, cs3=>DISPBEQ, cs4=>REGWRITE, cs5=>ADDSUB, cs6=>LOAD
+					ord=>RD, oimm=>ext, o1=>O1, o2=>O2, oskipIMM=>newIMM,);
 -- Declare ALU port map
 ALU: add_sub port map(A=>O1, B=>O2, mode=>ADDSUB, flow=>f, S=>sum);
 
